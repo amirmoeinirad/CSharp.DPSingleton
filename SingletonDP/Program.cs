@@ -3,11 +3,13 @@
 // September 2025
 
 // Main Concept: Singleton Design Pattern
+
 // In this pattern, a class has only one instance and provides a global point of access to it.
 // This is useful when exactly one object is needed to coordinate actions across the system.
 // Examples include database connections, logging, and configuration settings.
 
-// 1) Private static instance: The class contains a private static variable that holds the single instance of the class.
+// Mechanisms to implement the Singleton Pattern:
+// 1) Private static field: The class contains a private static variable that holds the single instance of the class.
 // 2) Private constructor: The constructor is private to prevent instantiation from outside the class.
 // 3) Public static method: A public static method (often named GetInstance) is provided to access the instance.
 // 4) Thread safety: In multi-threaded applications, care must be taken to ensure that the singleton instance is created
@@ -21,16 +23,22 @@ namespace SingletonDP
 {
     internal class Singleton
     {
+        // Field 1
         // Private static instance (created only once)
         // This field is used as the global access point to the Singleton instance.
+        // It is created as static so that it is shared across all instances of the class
+        // even though there will be only one instance.
+        // Can it be non-static? No, because we need to access it without creating an instance of the class.
+        // It is private so that it cannot be accessed directly from outside the class.
         private static Singleton? _instance;
 
 
-        // Lock object for thread safety
+        // Field 2
+        // Lock object used for thread safety
         private static readonly object _lock = new();
 
 
-        // Private constructor (no one can create the Singleton object from outside.)
+        // Private constructor (no one can create the Singleton object from outside the class.)
         private Singleton() { }
 
 
@@ -75,7 +83,8 @@ namespace SingletonDP
             Console.WriteLine("The Singleton Design Pattern in C#.NET.");
             Console.WriteLine("---------------------------------------\n");
 
-          
+
+            // We cannot create an instance of Singleton directly because its constructor is private.
             Singleton s1 = Singleton.GetInstance();
             s1.ShowMessage();
 
