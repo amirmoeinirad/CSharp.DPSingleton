@@ -24,8 +24,7 @@ namespace SingletonDP
     internal class Singleton
     {
         // Field 1
-        // Private static instance (created only once)
-        // This field is used as the global access point to the Singleton instance.
+        // Private static instance (created only once)        
         // It is created as static so that it is shared across all instances of the class
         // even though there will be only one instance.
         // Can it be non-static? No, because we need to access it without creating an instance of the class.
@@ -34,27 +33,27 @@ namespace SingletonDP
 
 
         // Field 2
-        // Lock object used for thread safety
+        // Lock object used for thread safety.
         private static readonly object _lock = new();
 
 
-        // Private constructor (no one can create the Singleton object from outside the class.)
+        // Private default constructor (no one can create the Singleton object from outside the class.)
         private Singleton() { }
 
 
-        // Public method to get the single instance
+        // Public method to get the single instance.
+        // This method provides a global access point to the Singleton instance. (A property could also be used.)
         // The GetInstance method checks if the instance is null, and if so, it creates a new instance.
         // Otherwise, it returns the existing instance.
         public static Singleton GetInstance()
         {
             if (_instance == null)
-            {
-                Console.WriteLine("Creating the Singleton instance...");
-
+            {                
                 // Thread-safe
                 // Double-check locking. The 'lock' keyword ensures that only one thread can enter this block at a time.
                 lock (_lock) 
                 {
+                    Console.WriteLine("Creating the Singleton instance...");
                     _instance = new Singleton();                 
                 }
             }
