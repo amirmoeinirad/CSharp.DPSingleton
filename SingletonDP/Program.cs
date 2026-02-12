@@ -24,10 +24,8 @@ namespace SingletonDP
     internal class Singleton
     {
         // Field 1
-        // Private static instance (created only once)        
-        // It is created as static so that it is shared across all instances of the class
-        // even though there will be only one instance.
-        // Can it be non-static? No, because we need to access it without creating an instance of the class.
+        // Private static instance (created only once)                
+        // Can it be non-static? No, because we need to access it without creating an instance of the class from outside.
         // It is private so that it cannot be accessed directly from outside the class.
         private static Singleton? _instance;
 
@@ -38,7 +36,10 @@ namespace SingletonDP
 
 
         // Private default constructor (no one can create the Singleton object from outside the class.)
-        private Singleton() { }
+        private Singleton() 
+        {
+            Console.WriteLine("Singleton object created.");
+        }
 
 
         // Public method to get the single instance.
@@ -49,7 +50,7 @@ namespace SingletonDP
         {
             if (_instance == null)
             {                
-                // Thread-safe
+                // Thread-safety
                 // Double-check locking. The 'lock' keyword ensures that only one thread can enter this block at a time.
                 lock (_lock) 
                 {
