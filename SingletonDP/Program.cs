@@ -5,7 +5,7 @@
 // Main Concept: Singleton Design Pattern
 
 // In this pattern, a class has only one instance and provides a global point of access to it.
-// This is useful when exactly one object is needed to coordinate actions across the system.
+// This is useful when exactly one object is needed to coordinate actions across the system or application.
 // Examples include database connections, logging, and configuration settings.
 
 // Mechanisms to implement the Singleton Pattern:
@@ -15,8 +15,8 @@
 // 4) Thread safety: In multi-threaded applications, care must be taken to ensure that the singleton instance is created
 // in a thread-safe manner.
 // 5) Lazy initialization: The instance is created only when it is first needed, which can save resources if the instance is never used.
-// 6) Global access point: The singleton instance can be accessed globally, making it easy to share data or functionality
-// across different parts of the application.
+// 6) Global access point: The singleton instance can be accessed globally (via a public method or property),
+// making it easy to share data or functionality across different parts of the application.
 
 
 namespace SingletonDP
@@ -26,6 +26,7 @@ namespace SingletonDP
         // Field 1
         // Private static instance (created only once)                
         // Can it be non-static? No, because we need to access it without creating an instance of the class from outside.
+        // Furthermore, since the accessor method 'GetInstance()' is sttaic, it cannot access an instance field.
         // It is private so that it cannot be accessed directly from outside the class.
         private static Singleton? _instance;
 
@@ -35,16 +36,17 @@ namespace SingletonDP
         private static readonly object _lock = new();
 
 
-        // Private default constructor (no one can create the Singleton object from outside the class.)
+        // Private default constructor
+        // No one can create the Singleton object from outside the class.
         private Singleton() 
         {
-            Console.WriteLine("Singleton object created.");
+            Console.WriteLine("Creating the Singleton instance...");            
         }
 
 
         // Public method to get the single instance.
         // This method provides a global access point to the Singleton instance. (A property could also be used.)
-        // The GetInstance method checks if the instance is null, and if so, it creates a new instance.
+        // The GetInstance() method checks if the instance is null, and if so, it creates a new instance.
         // Otherwise, it returns the existing instance.
         public static Singleton GetInstance()
         {
@@ -53,9 +55,9 @@ namespace SingletonDP
                 // Thread-safety
                 // Double-check locking. The 'lock' keyword ensures that only one thread can enter this block at a time.
                 lock (_lock) 
-                {
-                    Console.WriteLine("Creating the Singleton instance...");
-                    _instance = new Singleton();                 
+                {                    
+                    _instance = new Singleton();
+                    Console.WriteLine("Singleton object created.");
                 }
             }
             else
@@ -85,6 +87,7 @@ namespace SingletonDP
 
 
             // We cannot create an instance of Singleton directly because its constructor is private.
+            // Therefore, we should use the GetInstance() method.
             Singleton s1 = Singleton.GetInstance();
             s1.ShowMessage();
 
