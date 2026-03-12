@@ -5,7 +5,7 @@
 // Main Concept: The Singleton Design Pattern
 
 // In this pattern, a class has only one instance and provides a global point of access to it.
-// This is useful when exactly one object is needed to coordinate actions across the system or application.
+// This is useful when exactly one object is needed to coordinate actions across the application.
 // Examples include database connections pool, logging manager, and configuration settings manager.
 
 // Mechanisms to implement the Singleton Pattern:
@@ -25,10 +25,12 @@ namespace SingletonDP
     public sealed class Singleton
     {
         // Field 1
-        // Private static instance (created only once)                
-        // Can it be non-static? No, because we need to access it without creating an instance of the class from outside.
-        // Furthermore, since the accessor method 'GetInstance()' is sttaic, it cannot access an instance field.
+        // Private static field (created only once)
         // It is private so that it cannot be accessed directly from outside the class.
+        // Can it be non-static? No, because we need to access it without creating an instance of the class.
+        // Since it is static, it belongs to the class itself rather than any instance,
+        // ensuring that there is only one instance of the Singleton class.
+        // Furthermore, since the accessor method 'GetInstance()' is static, it cannot access an instance field.       
         private static Singleton? _instance;
 
 
